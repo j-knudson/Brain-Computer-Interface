@@ -29,7 +29,7 @@ spec:
             - CAP_AUDIT_WRITE
       volumeMounts:
         - mountPath: /home/jovyan/work
-          name: home-noobcrusher-Documents-PodmanPractice-JupyterStuff-BCI_Mounted-data-host-0
+          name: Data
     - args:
         - nginx
         - -g
@@ -55,7 +55,7 @@ spec:
   restartPolicy: Always
   volumes:
     - hostPath:
-        path: ./BCI_Mounted
+        path: ./data
         type: Directory
-      name: BCI_Mounted
+      name: Data
 status: {}
