@@ -20,6 +20,7 @@ spec:
           hostPort: 10000
         - containerPort: 80
           hostPort: 9000
+
       resources: {}
       securityContext:
         capabilities:
@@ -28,8 +29,10 @@ spec:
             - CAP_NET_RAW
             - CAP_AUDIT_WRITE
       volumeMounts:
-        - mountPath: /home/jovyan/work
-          name: Data
+        - mountPath: /home/jovyan/data
+          name: data
+        - mountPath: /home/jovyan/notebooks
+          name: notebook-pvc
     - args:
         - nginx
         - -g
@@ -57,5 +60,8 @@ spec:
     - hostPath:
         path: ./data
         type: Directory
-      name: Data
+      name: data
+    - name: notebook-pvc
+      persistentVolumeClaim:
+        claimName: notebook-pvc
 status: {}
