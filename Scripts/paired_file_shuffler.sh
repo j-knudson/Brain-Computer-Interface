@@ -1,5 +1,20 @@
 #! /bin/bash
+# Author: Henry Marty
 # Patch Author: John Knudson
+
+#Program requires two inputs: Input 1 for Left Directory Input 2 for Right Directory 
+#Example:  ./fileshuffle.sh /path_to_left /path_to_right
+#Program requires paired data to have equal alphanumerical naming in their respective directories
+#Program cannot handle nested directories 
+
+
+#To create an automation use: 
+####  sudo crontab -e 
+#for weekly add this line
+#0 0 * * 0   <path to paired_file_shuffle.sh> <path to left data> <path to right data> 
+#for every 30 seconds add these two lines  
+#* * * * *   <path to paired_file_shuffle.sh> <path to left data> <path to right data> 
+#* * * * *   sleep 30; <path to paired_file_shuffle.sh> <path to left data> <path to right data> 
 
 if [[ ! -d $1 ]]
 then
@@ -30,7 +45,7 @@ remake_files() {
     
    
     #check to make sure each directory is the same size
-    #ASSERT: equal sized directories means all data is paired
+    #ASSERT: equal sized directories assumes all data is correctly paired
     if [ "$count_left" != "$count_right" ]
     then 
         echo "ERROR: Directories are not the same size - Unpaired data"
@@ -126,8 +141,7 @@ sudo timedatectl set-ntp false
 # https://stackoverflow.com/a/32729736
 : $(sudo date -s @$randdate)
 
-temp_now=$(date)
-echo "date before calling function is: $temp_now"
+timedatectl
 #call remake files with initial arguments
 remake_files $1 $2 
 
@@ -143,6 +157,7 @@ echo $d1
 
 sudo timedatectl set-ntp true
 sudo service cron start
+timedatectl
 # systemctl restart systemd-timesyncd
 
 
