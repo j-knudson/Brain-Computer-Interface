@@ -44,6 +44,7 @@ RUN if [ -z "${scala_version}" ]; then \
 
 # Configure Spark
 ENV SPARK_HOME=/usr/local/spark
+COPY /home/Avatar/gcs-connector-hadoop3-latest.jar $SPARK_HOME/jars 
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
     PATH="${PATH}:${SPARK_HOME}/bin"
 
